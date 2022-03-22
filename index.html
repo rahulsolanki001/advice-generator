@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap');
+    *{font-family: 'Manrope',sans-serif;font-size:28px;}
+    body{background-color:hsl(218, 23%, 16%);}
+    .container{width:50vw;background-color:hsl(217, 19%, 24%);margin-left: 25%;margin-top: 15%;border-radius: 15px;margin-bottom: 10%;position: relative;}
+    .heading p{color:hsl(150, 100%, 66%); font-size: 18px; text-align: center;padding-top: 5%;}
+    .content{color:hsl(193, 38%, 86%);padding-left: 10%;}
+    .container img{margin-left: 12%;margin-bottom: 10%;margin-top: 5%;width: 80%;}
+    button{background-color: hsl(150, 100%, 66%);transition: 0.3s all;border-radius: 50%;border:1px solid hsl(150, 100%, 66%);height:50px;width: 50px;cursor: pointer;z-index: 5;position:absolute ;left:45%;top: 90%;}
+    .dice{padding-top:5%;}
+    button :hover{background-color:white;}
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    @media screen and (max-width : 800px) {
+      .container{width: 90vw;margin-left: 5%;margin-bottom: 0%;position: relative;}
+      .container img{width: 80%;margin-left: 10%;}
+      button{top: 88%;position: absolute;margin-top: 5%;}
+      .attribution{font-size: 10px;margin-top: 30%;}
+      
+    }
+    
+  </style>
+</head>
+<body onload="displayAdvice()">
+  <div class="container">
+    <div class="heading" id="'heading">
+      <p class="advice_id"></p>
+    </div>
+    <div class="content" id="'content">
+      <h1></h1>
+    </div>
+    <img src="./images/pattern-divider-desktop.svg" alt="pattern-divider" srcset="./images/pattern-divider-mobile.svg 600w, ./images/pattern-divider-desktop.svg 2x" >
+    <button class="'dice" onclick="displayAdvice()"><img src="./images/icon-dice.svg" alt="dice-image" class="dice"></button>
+  </div>
+  
+
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Rahul Solanki</a>.
+  </div>
+
+  <script>
+    async function getAdvice(){
+      let url='https://api.adviceslip.com/advice'
+      try {
+        let res=await fetch(url);
+        return await res.json()
+      }catch (err){
+        console.log(err)
+      }
+    }
+
+    async function displayAdvice(){
+      let data= await getAdvice();
+      let advice_id=document.querySelector('.advice_id')
+      let content=document.querySelector('.content')
+      advice_id.innerText="Advice  "+ "#"+ data.slip.id
+      content.innerText='" '+data.slip.advice+' "'
+    }
+  
+
+  </script>
+</body>
+</html>
